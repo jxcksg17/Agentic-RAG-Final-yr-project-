@@ -1,0 +1,10 @@
+[
+  {
+    "query": "What is the capital of France?",
+    "label": 2
+  },
+  {
+    "query": "Who directed the movie Inception?",
+    "label": 2
+  }
+]
