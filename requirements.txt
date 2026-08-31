@@ -1,0 +1,24 @@
+# Engineer 3 — Latent Probing & Uncertainty Specialist
+# NOTE: hidden-state hooking requires the *raw* HuggingFace model object.
+# vLLM (used by Engineer 2 for serving) fuses/optimizes attention kernels
+# (PagedAttention, continuous batching) and does not expose a stable,
+# hookable nn.Module graph. So this stack loads Phi-4-mini-instruct a
+# SECOND time via plain `transformers`, in eval-only / no-serving mode,
+# purely to read hidden states. This is a deliberate architectural split,
+# not a duplication mistake — see README.md, "Why not hook vLLM".
+
+torch>=2.3.0
+transformers>=4.44.0
+accelerate>=0.33.0
+bitsandbytes>=0.43.0        # 4-bit load, mirrors Engineer 2's quantization budget
+sentence-transformers>=3.0.0
+scikit-learn>=1.4.0         # LogisticRegression: the actual SEP/accuracy-probe
+                             # architecture from OATML/semantic-entropy-probes
+numpy>=1.26.0
+pandas>=2.2.0
+tqdm>=4.66.0
+
+# Reference implementations installed/read from (not runtime deps, but
+# clone these if you want to diff against the authors' own code):
+#   git clone https://github.com/OATML/semantic-entropy-probes
+#   git clone https://github.com/jlko/semantic_uncertainty
